@@ -7,14 +7,39 @@
     scroll-behavior: smooth;
 }
 
+:root {
+    /* Dark theme variables (default) */
+    --bg1: #0f2027;
+    --bg2: #203a43;
+    --bg3: #2c5364;
+    --text: #fdfdfd;
+    --accent: #00eaff;
+    --muted: rgba(255,255,255,0.08);
+    --card-bg: rgba(255,255,255,0.08);
+    --btn-text: #0f2027;
+}
+
+/* Light theme overrides */
+body.light {
+    --bg1: #f6f9fc;
+    --bg2: #f0f4f8;
+    --bg3: #e8eef6;
+    --text: #0f1720;
+    --accent: #0077a3;
+    --muted: rgba(0,0,0,0.05);
+    --card-bg: rgba(0,0,0,0.03);
+    --btn-text: #ffffff;
+}
+
 body {
-    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
     background-size: 400% 400%;
     animation: bgShift 15s ease infinite;
-    color: #fdfdfd;
+    color: var(--text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background 0.4s ease, color 0.3s ease;
 }
 
 /* ===== Animated Background ===== */
@@ -24,15 +49,13 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-
-
 /* ===== Sidebar ===== */
 .sidebar {
     position: fixed;
     top: 0%;
     left: 0;
     width: 150px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.03);
     padding: 1rem;
     height: 100%;
     backdrop-filter: blur(10px);
@@ -53,7 +76,13 @@ body {
     transition: color 0.3s ease;
 }
 
-.sidebar a:hover { color: #00eaff; }
+.sidebar a:hover { color: var(--accent); }
+
+/* Active nav */
+.sidebar a.active {
+    color: var(--accent);
+    font-weight: 700;
+}
 
 /* ===== Main Layout ===== */
 .main-grid {
@@ -76,9 +105,22 @@ body {
     text-align: left;
 }
 
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.controls {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
 .hero-content h1 {
     font-size: 2.5rem;
-    color: #00eaff;
+    color: var(--accent);
 }
 
 .hero-content span { color: #aeeaff; }
@@ -86,25 +128,33 @@ body {
 .hero-content p {
     margin: 1rem 0 2rem;
     font-size: 1.1rem;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.06);
     padding: 1rem;
     border-radius: 10px;
 }
 
+/* Buttons (kept your original look with slight variable usage) */
 .btn {
     display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background: #00eaff;
-    color: #0f2027;
+    padding: 0.6rem 1rem;
+    background: var(--accent);
+    color: var(--btn-text);
     border-radius: 30px;
     font-weight: bold;
     text-decoration: none;
     transition: transform 0.3s, background 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
-    background: #aeeaff;
-    transform: scale(1.05);
+    transform: scale(1.03);
+    opacity: 0.95;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
 }
 
 /* ===== Hero Image ===== */
@@ -112,7 +162,7 @@ body {
     width: 260px;
     height: 260px;
     border-radius: 50%;
-    border: 3px solid #00eaff;
+    border: 3px solid var(--accent);
     box-shadow: 0 0 25px rgba(0,234,255,0.6);
     animation: float 3s ease-in-out infinite;
 }
@@ -127,17 +177,28 @@ body {
 .about {
     max-width: 900px;
     margin: 4rem auto;
-    background: rgba(255,255,255,0.08);
+    background: var(--card-bg);
     padding: 2rem;
     border-radius: 16px;
     backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(0,234,255,0.2);
+    box-shadow: 0 0 20px rgba(0,234,255,0.12);
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .about h2 {
     font-size: 2rem;
-    color: #00eaff;
+    color: var(--accent);
     margin-bottom: 1rem;
+}
+
+/* Hidden helper class */
+.hidden {
+    display: none !important;
 }
 
 /* ===== Contact Section ===== */
@@ -149,7 +210,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    background: rgba(255,255,255,0.08);
+    background: var(--card-bg);
     border-radius: 18px;
     padding: 2rem;
     backdrop-filter: blur(10px);
@@ -159,12 +220,25 @@ body {
     flex: 1 1 45%;
 }
 
+/* Small form styling additions */
+.form-group {
+    margin-bottom: 0.8rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
 /* ===== Footer ===== */
 footer {
     text-align: center;
     padding: 1rem 0;
     color: #ccc;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
     backdrop-filter: blur(10px);
     margin-top: auto;
 }
